@@ -4,6 +4,24 @@ from pydub.playback import play
 from pydub import AudioSegment
 import time
 
+class Person:
+    ip = 0
+    home = True
+    song = ""
+    arrivalAnnouncement = ""
+    departureAnnouncement = ""
+
+person1 = Person()
+person1.ip = "192.168.1.135"
+person1.song = ""
+person1.arrivalSong = ""
+
+
+
+person2 = Person()
+person2.ip = "192.168.1.135"
+person2.song = ""
+person2.arrivalSong = ""
 
 def checkIfArrived(ip):
     output = ""
@@ -29,20 +47,12 @@ def doublecheckIfArrived(ip):
         print("Reutrning true")
         return True
 
-
-class Person:
-    ip = 0
-    home = True
-    song = ""
-    arrived = ""
-    gone = ""
-
-def mainPart(input):
+def updateStatus(input):
     if input.home == False:
         if checkIfArrived(input.ip) == True:
             print(str(input) + " has arrived")
             play(AudioSegment.from_mp3("announcing.mp3"))
-            play(AudioSegment.from_mp3(input.arrived))
+            play(AudioSegment.from_mp3(input.arrivalAnnouncement))
             play(AudioSegment.from_mp3(input.song))
             input.home = True    
     elif input.home == True and checkIfArrived(input.ip) == False:
@@ -50,18 +60,14 @@ def mainPart(input):
             input.home = False
             play(AudioSegment.from_mp3("announcing.mp3"))
             print(str(input) + " has left")
-            play(AudioSegment.from_mp3(input.gone))
+            play(AudioSegment.from_mp3(input.departureAnnouncement))
 
 startup_sound = AudioSegment.from_mp3("bootup.mp3")
 play(startup_sound)
 
 
-person1 = Person()
-person1.ip = "192.168.1.12"
-person1.song = ""
-person1.arrivalSong = ""
-
 while(1):
     print("Start of one iteration")
-    mainPart(person1)
+    updateStatus(person1)
+    updateStatus(person2)
     time.sleep(1)
