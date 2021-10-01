@@ -60,7 +60,6 @@ person1 = Person()
 person1.ip = "192.168.1.12"
 person1.song = ""
 person1.arrivalSong = ""
-cole.departureSong = ""
 
 while(1):
     print("Start of one iteration")
